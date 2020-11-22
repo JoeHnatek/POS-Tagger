@@ -60,11 +60,15 @@ def tokenize(data):
     return wordDict, tagDict, masterTagDict
 
 def getVocabCount(data):
-
+    """
+    getVocabCount returns the number of unique keys within a master dictionary.
+    """
     return len(data.keys())
         
 def computeProb(wordDict, masterTagDict, tagDict, tagVocab):
-
+    """
+    ComputeProb returns a dictionary containing the resulting P(tag|word).
+    """
     resultDict = {}
 
     for word in wordDict.keys():
@@ -84,7 +88,7 @@ def computeProb(wordDict, masterTagDict, tagDict, tagVocab):
             
             den = value + tagVocab
 
-            key = "{}+{}".format(word, tag)
+            key = "{}+{}".format(word, tag) # Format the word as "word+tag", so that we can process data better in tester
 
             resultDict[key] = num/den
     
@@ -92,26 +96,27 @@ def computeProb(wordDict, masterTagDict, tagDict, tagVocab):
 
 def output(data):
 
+    # Write the results of P(tag|word) to the file in order for easy viewing.
     with open("tagger-train-prob.txt", "w") as filename:
         for key, value in reversed(sorted(data.items(), key=lambda x: x[1])):
             filename.write("{} {}\n".format(key, value))
 
 def main():
 
-    data = preProcessData(filepath)
+    data = preProcessData(filepath) # Pre-process our data
 
-    wordDict, tagDict, masterTagDict = tokenize(data)
+    wordDict, tagDict, masterTagDict = tokenize(data)   # Tokenize our data for easy handling.
 
-    tagVocab = getVocabCount(masterTagDict)
+    tagVocab = getVocabCount(masterTagDict) # Grab the vocab count of tags within the corpus.
 
-    result = computeProb(wordDict, masterTagDict, tagDict, tagVocab)
+    result = computeProb(wordDict, masterTagDict, tagDict, tagVocab)    # Compute P(tag|word)
 
-    output(result)
+    output(result)  # Output the results of computeProb to a file.
 
 
 
 if __name__ == "__main__":
 
-    filepath = sys.argv[1]  
+    filepath = sys.argv[1]  # Grab the test data.
 
-    main()
+    main()  # Run the program
