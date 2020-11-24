@@ -1,3 +1,37 @@
+"""
+Written by: Joseph Hnatek
+Date: Nov. 23, 2020
+
+Overall:
+This program will train data given from WSJ articles. 
+Once trained, it will output to tagger-train-prob.txt with our trained model from frequency of words.
+
+Example:
+python3 tagger-train.py ./PA5-wsj-pos/pos-train.txt
+-- OUTPUT TO FILE --
+*Note: "word+tag probability"
+,+, 0.9992732787765806
+.+. 0.9990879530494091
+the+DT 0.9988317973631997
+of+IN 0.9983161014380494
+to+TO 0.9982980792608801
+and+CC 0.997352587244284
+a+DT 0.9970156476851105
+for+IN 0.9950129471564209
+$+$ 0.9950086805555556
+``+`` 0.994999456462659
+
+Algorithm:
+First, pre-process the data from the WSJ articles.
+Next, tokenize the pre-processed data so that we have the word and their tag
+    1. If the word contains "\/" witin numbers or words.
+        a. Remove the "\". Ex) "3\/4" -> "3/4"
+Next, get the vocab count of the tags. (Number of tags possible)
+Next, compute the probability of P(tag|given).
+Finally, output the results to tagger-train-prob.txt
+"""
+
+
 import sys
 import re
 
